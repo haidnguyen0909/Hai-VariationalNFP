@@ -10,6 +10,8 @@ import chainer.training.extensions as E
 
 import data
 import data2
+import data_ggnn
+import ggnn
 import model
 import model2
 
@@ -38,9 +40,14 @@ if args.mode == 1:
     nfp = model.NFP(args.hidden_dim, args.out_dim, max_degree, len(atom2id),
                     args.radius, concat_hidden=True)
     converter = data.concat_example
-else:
+elif args.mode == 2:
     train, val, max_degree, atom2id, C = data2.load()
     nfp = model2.NFP(args.hidden_dim, args.out_dim, max_degree, len(atom2id),
+                    args.radius, concat_hidden=True)
+    converter = chainer.dataset.concat_examples
+else:
+    train, val, max_degree, atom2id, C = data_ggnn.load()
+    nfp = ggnn.GGNN(args.hidden_dim, args.out_dim, len(atom2id),
                     args.radius, concat_hidden=True)
     converter = chainer.dataset.concat_examples
 
