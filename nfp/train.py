@@ -14,7 +14,7 @@ import data_ggnn
 import ggnn
 import model
 import model2
-
+import model3
 
 parser = argparse.ArgumentParser(description='Chainer example: MNIST')
 parser.add_argument('--mode', '-m', type=int, default=2,
@@ -44,6 +44,11 @@ elif args.mode == 2:
     train, val, max_degree, atom2id, C = data2.load()
     nfp = model2.NFP(args.hidden_dim, args.out_dim, max_degree, len(atom2id),
                     args.radius, concat_hidden=True)
+    converter = chainer.dataset.concat_examples
+elif args.mode == 3:
+    train, val, max_degree, atom2id, C = data2.load()
+    nfp = model3.NFP(args.hidden_dim, args.out_dim, max_degree, len(atom2id),
+                     args.radius, concat_hidden=True)
     converter = chainer.dataset.concat_examples
 else:
     train, val, max_degree, atom2id, C = data_ggnn.load()
